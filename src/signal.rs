@@ -21,15 +21,6 @@ impl Signal{
         Signal { state: Mutex::new(State::Empty), cond: (Condvar::new()) }
     }
     pub fn wait(&self){
-        match *self.state.lock().unwrap(){
-            State::Notified => {println!("notified")},
-            State::Empty => {
-                println!("empty")
-            },
-            State::Waiting => {
-                println!("waiting")
-            }
-        }
         let mut state = self.state.lock().unwrap();
         match *state {
             State::Notified => *state = State::Empty,
